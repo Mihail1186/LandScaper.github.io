@@ -17,14 +17,25 @@
 let body = document.querySelector('body');
 const menuBtn = document.querySelector('.icon__menu');
 const menuBody = document.querySelector('.dots-menu');
+const hiddenTel = document.getElementById('hiddenTel');
+const toTop = document.getElementById('toTop');
+let navFixed = document.getElementById('fixed');
+let animItems = document.querySelectorAll('._anim-items');
 
 
+/* ==========================================
+menu-burger
+================================================ */
 menuBtn.addEventListener('click', function () {
    menuBtn.classList.toggle('_active');
    menuBody.classList.toggle('_active');
    body.classList.toggle('_lock');
 });
 
+
+/* ==========================================
+preloader
+================================================ */
 window.onload = function () {
    let preloader = document.getElementById('preloader');
 
@@ -32,6 +43,10 @@ window.onload = function () {
    preloader.style.display = 'none';
 }
 
+
+/* ==========================================
+если зашли на устройтся с поддержкой тач-события, даем определенные классы навигации
+================================================ */
 let isMobile = {
    Android: function () { return navigator.userAgent.match(/Android/i); },
    BlackBerry: function () { return navigator.userAgent.match(/BlackBerry/i); },
@@ -39,7 +54,7 @@ let isMobile = {
    Opera: function () { return navigator.userAgent.match(/Opera Mini/i); },
    Windows: function () { return navigator.userAgent.match(/IEMobile/i); },
    any: function () { return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows()); }
-};
+}
 
 if (isMobile.any()) {
    body.classList.add('touch');
@@ -75,3 +90,94 @@ new Swiper('.top-slider', {
       clickable: true,
    }
 });
+
+
+/* ==========================================
+Анимирую появление скрытого номера в nav, липкой nav, стрелки вверх
+================================================ */
+
+window.addEventListener('scroll', () => {
+   let scrollPos = window.scrollY;
+
+   if (scrollPos > 200) {
+      hiddenTel.classList.remove('tel-hidden');
+   }
+   else {
+      hiddenTel.classList.add('tel-hidden');
+   }
+
+   if (scrollPos > 156) {
+      navFixed.classList.add('fixed');
+   } else {
+      navFixed.classList.remove('fixed');
+   }
+
+
+   if (scrollPos > 500) {
+      toTop.classList.remove('arrow-to-show');
+   } else {
+      toTop.classList.add('arrow-to-show');
+   }
+
+});
+
+
+/* ==========================================
+Анимация элементов
+================================================ */
+
+if (animItems.length > 0) {
+   window.addEventListener('scroll', animOnScroll);
+   function animOnScroll() {
+      for (let index = 0; index < animItems.length; index++) {
+         const animItem = animItems[index];
+         const animItemHeight = animItem.offsetHeight;
+         const animItemOffset = offset(animItem).top;
+         const animStart = 4;
+
+         let animItemPoint = window.innerHeight - animItemHeight / animStart;
+         if (animItemHeight > window.innerHeight) {
+            animItemPoint = window.innerHeight - window.innerHeight / animStart;
+         }
+
+         if ((pageYOffset > animItemOffset - animItemPoint) && pageYOffset < (animItemOffset + animItemHeight)) {
+            animItem.classList.add('_active');
+         } else {
+            // Выключаем повторное анимирование, 
+            if (!animItem.classList.contains('_anim-no-hide')) {
+               animItem.classList.remove('_active');
+            }
+         }
+      }
+
+   }
+   function offset(el) {
+      const rect = el.getBoundingClientRect(),
+         scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+         scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
+
+   }
+
+   //Вызываем анимацию с задержкой
+   setTimeout(() => {
+      animOnScroll();
+   }, 500);
+
+}
+
+
+/* ==========================================
+SrollToTop
+================================================ */
+toTop.addEventListener('click', () => {
+   window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+   });
+});
+
+
+
+
+
