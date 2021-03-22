@@ -716,15 +716,28 @@ body.ie ._ibg img {
   z-index: 5;
 }
 
+.nav__logo {
+  display: none;
+}
+
+.nav__logo,
 .nav__tel {
   -webkit-box-flex: 0;
-      -ms-flex: 0 0 auto;
-          flex: 0 0 auto;
+      -ms-flex: 0 1 auto;
+          flex: 0 1 auto;
   -webkit-transition: opacity 0.6s linear, visibility 0.6s linear, -webkit-transform 0.6s linear 0s;
   transition: opacity 0.6s linear, visibility 0.6s linear, -webkit-transform 0.6s linear 0s;
   -o-transition: transform 0.6s linear 0s, opacity 0.6s linear, visibility 0.6s linear;
   transition: transform 0.6s linear 0s, opacity 0.6s linear, visibility 0.6s linear;
   transition: transform 0.6s linear 0s, opacity 0.6s linear, visibility 0.6s linear, -webkit-transform 0.6s linear 0s;
+}
+
+.logo-hidden {
+  -webkit-transform: translate(0%, -60%);
+      -ms-transform: translate(0%, -60%);
+          transform: translate(0%, -60%);
+  opacity: 0;
+  visibility: hidden;
 }
 
 .tel-hidden {
@@ -770,13 +783,13 @@ body.mouse .dots-menu > .nav-item:hover > .nav-link {
 }
 
 body.mouse .dots-menu .nav-item:hover > ul {
-  top: 200%;
+  top: 190%;
   opacity: 1;
   visibility: visible;
 }
 
 body.touch .sub-menu.open {
-  display: block;
+  max-height: 100vh;
 }
 
 body.touch .sub-menu {
@@ -786,7 +799,11 @@ body.touch .sub-menu {
   left: 0;
   top: 175%;
   z-index: 500;
-  display: none;
+  max-height: 0;
+  overflow: hidden;
+  -webkit-transition: max-height 0.4s ease-out;
+  -o-transition: max-height 0.4s ease-out;
+  transition: max-height 0.4s ease-out;
 }
 
 body.mouse .sub-menu {
@@ -1561,11 +1578,18 @@ body.touch .sub-menu > li > a {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
     width: 35px;
     height: 25px;
     cursor: pointer;
     z-index: 5;
     position: relative;
+  }
+
+  .nav__logo {
+    display: block;
   }
 
   body.touch .sub-menu {
@@ -1577,12 +1601,17 @@ body.touch .sub-menu > li > a {
     z-index: 100;
   }
 
+  body.touch .sub-menu.open {
+    padding-bottom: 30px;
+    background-color: #f7f7f7;
+  }
+
   body.touch .sub-menu-1 {
     z-index: 101;
   }
 
   body.touch .sub-menu > li > a {
-    background-color: #a7a7a7;
+    background-color: #f7f7f7;
     padding: 10px 10px 10px 40px;
   }
 

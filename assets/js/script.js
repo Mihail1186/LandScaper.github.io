@@ -17,10 +17,13 @@
 let body = document.querySelector('body');
 const menuBtn = document.querySelector('.icon__menu');
 const menuBody = document.querySelector('.dots-menu');
-const hiddenTel = document.getElementById('hiddenTel');
+const hiddenTel = document.getElementById('hidden-tel');
+const hiddenLogo = document.getElementById('hidden-logo');
 const toTop = document.getElementById('toTop');
 let navFixed = document.getElementById('fixed');
 let animItems = document.querySelectorAll('._anim-items');
+
+
 
 
 /* ==========================================
@@ -93,7 +96,7 @@ new Swiper('.top-slider', {
 
 
 /* ==========================================
-Анимирую появление скрытого номера в nav, липкой nav, стрелки вверх
+Анимирую появление скрытого номера в nav, липкой nav, стрелки вверх, mobile logo
 ================================================ */
 
 window.addEventListener('scroll', () => {
@@ -101,9 +104,12 @@ window.addEventListener('scroll', () => {
 
    if (scrollPos > 200) {
       hiddenTel.classList.remove('tel-hidden');
+      hiddenLogo.classList.remove('logo-hidden');
+      
    }
    else {
       hiddenTel.classList.add('tel-hidden');
+      hiddenLogo.classList.add('logo-hidden');
    }
 
    if (scrollPos > 156) {
